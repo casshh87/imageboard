@@ -1,8 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 include 'db.php';
 
 session_start();
@@ -16,12 +12,15 @@ $remainingTime = 0;
 include 'post.php';
 
 // Получение всех постов
-$posts = $db->query("SELECT * FROM posts ORDER BY id DESC")->fetchAll();
 $statement = $db->query("SELECT * FROM posts ORDER BY id DESC");
-if (!$statement) {
-    die("Ошибка запроса SELECT");
-}
 $posts = $statement->fetchAll();
+
+// Получение файлов к каждому посту
+foreach ($posts as &$post) {
+    $stmt = $db->prepare("SELECT file_name FROM post_files WHERE post_id = ?");
+    $stmt->execute([$post['id']]);
+    $post['files'] = $stmt->fetchAll(PDO::FETCH_COLUMN);
+}
 
 ?>
 
@@ -30,54 +29,64 @@ $posts = $statement->fetchAll();
 <head>
     <meta charset="UTF-8">
     <title>Червач</title>
-    <style>
-        body { font-family: Arial; max-width: 800px; margin: 0 auto; }
-        .post { border: 1px solid #ddd; padding: 10px; margin: 10px 0; }
-        img { max-width: 200px; }
-        .timer-message {
-            color: #d32f2f;
-            background: #ffebee;
-            padding: 8px 12px;
-            border-radius: 4px;
-            margin-bottom: 12px;
-            border-left: 3px solid #f44336;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Червач</h1>
     
-    <!-- Форма отправки -->
-    <form method="post" enctype="multipart/form-data">
+
+    <!-- Форма -->
+<div class="form-wrapper">
+    <form method="post" enctype="multipart/form-data" class="message-form">
         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
-        
+
         <?php if (!empty($errorMessage)): ?>
             <div class="timer-message" id="timer-message" data-seconds="<?= $remainingTime ?>">
-                <?= htmlspecialchars($errorMessage) ?> (<span id="timer"><?= $remainingTime ?></span> сек.)
+                <?= htmlspecialchars($errorMessage) ?> 
+                <?php if ($remainingTime > 0): ?> (Осталось <span id="timer"><?= $remainingTime ?></span> сек.) <?php endif; ?>
             </div>
         <?php endif; ?>
-        
-        <input type="text" name="name" placeholder="Имя (опционально)"><br>
-        <textarea name="text" placeholder="Текст" required></textarea><br>
-        <input type="file" name="image" accept="image/*"><br>
+
+        <input type="text" name="name" placeholder="Имя (опционально)"><br><br>
+        <textarea name="text" placeholder="Текст сообщения"></textarea><br><br>
+        <input type="file" name="media[]" accept="image/*,video/*" multiple onchange="if(this.files.length > 5){ alert('Можно выбрать не более 5 файлов'); this.value = ''; }">
+
         <button type="submit">Отправить</button>
     </form>
+</div>
 
-    <!-- Список постов -->
+<!-- Список постов -->
     <?php foreach ($posts as $post): ?>
         <div class="post">
             <b><?= htmlspecialchars($post['name']) ?></b>
             <small style="color:gray"><?= date('d.m.Y H:i', strtotime($post['created_at'])) ?></small>
             <p><?= nl2br(htmlspecialchars($post['text'])) ?></p>
-            <?php if ($post['image']): ?>
-                <img src="uploads/<?= htmlspecialchars($post['image']) ?>" alt="Image">
+
+            <?php if (!empty($post['files'])): ?>
+                <?php foreach ($post['files'] as $file): ?>
+                    <?php
+                        $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                        $isVideo = in_array($ext, ['mp4', 'webm', 'ogg']);
+                    ?>
+                    <?php if ($isVideo): ?>
+                        <video controls width="300">
+                            <source src="uploads/<?= htmlspecialchars($file) ?>" type="video/<?= $ext ?>">
+                            Ваш браузер не поддерживает воспроизведение видео.
+                        </video>
+                    <?php else: ?>
+                        <img src="uploads/<?= htmlspecialchars($file) ?>" 
+                             alt="image" 
+                             onclick="openModal(this)"
+                             data-post-id="<?= $post['id'] ?>">
+                    <?php endif; ?>
+                <?php endforeach; ?>
             <?php endif; ?>
         </div>
     <?php endforeach; ?>
 
-    <script>
-    src="./script.js"
-        
-    </script>
+     <!-- Модальное окно -->
+  <div id="imageModal" class="modal" onclick="closeModal()">
+    <img id="modalImage" class="modal-content" onclick="event.stopPropagation(); closeModal();">
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
