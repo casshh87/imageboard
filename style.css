@@ -1,43 +1,57 @@
-body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 0; }
-.post { border: 1px solid #ddd; padding: 10px; margin: 15px 0; }
-img { max-width: 200px; display: inline-block; margin: 5px; vertical-align: middle; cursor: pointer; }
-video { display: block; margin: 5px 0; }
-.timer-message {
-    color: #d32f2f;
-    background: #ffebee;
-    padding: 8px 12px;
-    border-radius: 4px;
-    margin-bottom: 12px;
-    border-left: 3px solid #f44336;
+  /* Base styles */
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0;
+    background-color: #ebf0ee;
 }
 
-/* Стили для модального окна */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
+/* Header and navigation */
+.header-container {
     width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.9);
-    text-align: center;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
-.modal-content {
-    max-width: 90%;
-    max-height: 90%;
-    margin: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.top-nav {
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    width: 100%;
 }
 
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.nav-logo img {
+    height: 100px;
+}
+
+.nav-links a {
+    color: black;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #ffcc00;
+}
+
+/* Form styles */
 .form-wrapper {
     display: flex;
     justify-content: center;
-    margin-top: 0; /* убираем отступ сверху */
+    margin-top: 0;
 }
 
 .message-form {
@@ -49,7 +63,7 @@ video { display: block; margin: 5px 0; }
     border-radius: 8px;
     background-color: #f9f9f9;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 0; /* тоже важно */
+    margin-top: 0;
 }
 
 .message-form input[type="text"],
@@ -69,3 +83,94 @@ video { display: block; margin: 5px 0; }
     padding: 10px 20px;
     cursor: pointer;
 }
+
+.timer-message {
+    color: #d32f2f;
+    background: #ffebee;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    border-left: 3px solid #f44336;
+}
+
+/* Posts and content */
+.main-content {
+    margin-left: 0;
+    padding: 10px;
+}
+
+.post {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 15px 0;
+  
+       
+        width: 100%;
+        box-sizing: border-box;
+  
+    
+}
+
+.post-header {
+    margin-bottom: 10px;
+}
+
+.post-header small {
+    color: gray;
+}
+
+.reply-btn {
+    background: none;
+    border: none;
+    color: #789922;
+    cursor: pointer;
+    padding: 0 5px;
+    font-size: 12px;
+}
+
+.reply-btn:hover {
+    text-decoration: underline;
+}
+
+.post img {
+    width: auto;
+    max-width: 150px;
+    max-height: 150px;
+    display: inline-block;
+    margin: 5px;
+    vertical-align: middle;
+    cursor: pointer;
+    object-fit: cover; /* чтобы красиво обрезались */
+}
+
+
+
+video {
+    display: block;
+    margin: 5px 0;
+    max-width: 100%;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    overflow-y: auto; /* вертикальный скролл */
+    text-align: center;
+    padding: 40px 0; /* чтобы отступ сверху был */
+    box-sizing: border-box;
+  }
+  
+  .modal-content {
+    display: inline-block;
+    width: 75%;      /* по ширине экрана */
+    height: auto;     /* авто высота */
+    max-width: 100%;
+    box-shadow: 0 0 15px #000;
+  }
+  
