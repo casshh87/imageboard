@@ -84,9 +84,9 @@ foreach ($posts as &$post) {
     <?php endforeach; ?>
 
      <!-- Модальное окно -->
-  <div id="imageModal" class="modal" onclick="closeModal()">
-    <img id="modalImage" class="modal-content" onclick="event.stopPropagation(); closeModal();">
-  </div>
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <img id="modalImage" class="modal-content" onclick="closeModal()">
+    </div>
   <script src="script.js"></script>
 </body>
 </html>
