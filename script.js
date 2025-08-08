@@ -1,14 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
-    function openModal(img) {
-        const modal = document.getElementById("imageModal");
-        const modalImg = document.getElementById("modalImage");
-        modal.style.display = "block";
-        modalImg.src = img.src;
-    }
+ function openModal(img) {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImage");
 
-    function closeModal() {
-        document.getElementById("imageModal").style.display = "none";
-    }
+    modalImg.src = img.src;
+    modal.style.display = "block";
+}
+
+function closeModal() {
+    document.getElementById("imageModal").style.display = "none";
+}
 
     // Назначаем обработчики на картинки
     document.querySelectorAll('.post img').forEach(img => {
