@@ -1,0 +1,547 @@
+
+        /* Основные стили */
+        body {
+             font-family: system-ui, -apple-system, sans-serif;
+            background:  #eeeeee;
+    color: #333;
+            margin: 0;
+            padding: 0;
+            padding-top: 25px; /* даём место под фиксированную панель */
+            line-height: 1.4;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-top: 30px; /* Высота панели + небольшой отступ */
+            background-color: #fdddb7;
+            padding: 10px 15px;
+            margin-bottom: 0;
+        }
+
+        header h2 {
+            margin: 5px 0;
+            color: #117743;
+            font-size: 1.2em;
+        }
+
+       /* Основные стили для ссылок в хедере (навигация) */
+header a {
+    color: #800000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+        header a:hover {
+            text-decoration: underline;
+        }
+        /* Стили для ссылок в заголовках постов */
+.post-header a {
+    color: inherit; /* наследует цвет от родителя */
+}
+
+        /* Посты */
+      .post {
+    background: #dddddd;
+    
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    transition: background 0.3s;
+}
+
+
+        .post-text {
+            margin: 10px 0;
+            word-wrap: break-word;
+            color: black;
+        }
+
+        .post-text.collapsed {
+            max-height: 150px;
+            overflow: hidden;
+            position: relative;
+            color:black;
+        }
+
+        .post-text.collapsed::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(to bottom, rgba(245,245,245,0), rgba(245,245,245,1));
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: #800000;
+            cursor: pointer;
+            padding: 2px 5px;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+
+        .toggle-btn:hover {
+            text-decoration: underline;
+        }
+
+        .media-files {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: nowrap; /* Запрещаем перенос на новую строку */
+            overflow-x: auto; /* Добавляем горизонтальную прокрутку */
+            gap: 10px;
+            padding-bottom: 5px; /* Небольшой отступ для красоты */
+        }
+
+        .media-files img {
+            max-width: 200px;
+            max-height: 200px;
+            cursor: pointer;
+            border: 1px solid #D9BFB7;
+        }
+
+        .media-files video {
+            max-width: 250px;
+            max-height: 250px;
+            border: 1px solid #D9BFB7;
+        }
+
+        /* Модальное окно для изображений */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  padding-top: 60px;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background-color: rgba(0,0,0,0.9);
+  text-align: center;
+}
+
+.modal-content {
+  max-width: 90%;
+  max-height: 80%;
+  
+}
+
+.modal .prev, .modal .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  padding: 16px;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  user-select: none;
+  transform: translateY(-50%);
+}
+
+.modal .prev { left: 20px; }
+.modal .next { right: 20px; }
+
+.modal .prev:hover, .modal .next:hover {
+  color: #bbb;
+}
+
+
+        /* Форма ответа - ИСПРАВЛЕНА */
+        .message-form {
+            background-color: white;
+            border: 1px solid #D9BFB7;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .message-form textarea {
+            width: 100%;
+            min-height: 100px;
+            background-color: white;
+            padding: 8px;
+            border: 1px solid #D9BFB7;
+            border-radius: 3px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        /* КОНТЕЙНЕР КНОПОК - ПОЛНОСТЬЮ ПЕРЕПИСАН */
+        .form-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            gap: 10px;
+            position: relative;
+        }
+
+        /* КОНТЕЙНЕР ДЛЯ INPUT FILE - ИСПРАВЛЕН */
+        .file-input-container {
+            position: relative;
+            display: inline-block;
+            flex: 1;
+            max-width: 70%;
+            height: 35px;
+        }
+
+        .file-input-container input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        /* КАСТОМНАЯ КНОПКА - ИСПРАВЛЕНА */
+        .custom-file-button {
+            background-color: #EA8;
+            color: #800000;
+            border: 1px solid #800000;
+            padding: 8px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
+            display: inline-block;
+            font-size: 0.9em;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* КНОПКА ОТПРАВКИ - ИСПРАВЛЕНА */
+        .form-buttons button[type="submit"] {
+            background-color: #EA8;
+            color: #800000;
+            border: 1px solid #800000;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 3px;
+            flex: 0 0 auto;
+            white-space: nowrap;
+            z-index: 3;
+            position: relative;
+        }
+
+        .form-buttons button:hover,
+        .custom-file-button:hover {
+            background-color: #F5C396;
+        }
+
+        /* Тулбар форматирования */
+        .toolbar {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+
+        .toolbar button {
+            background-color: #EA8;
+            color: #800000;
+            border: 1px solid #800000;
+            padding: 3px 8px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        .toolbar button:hover {
+            background-color: #F5C396;
+        }
+
+        /* Ссылки на посты */
+        .post-link {
+            color: #117743;
+            text-decoration: none;
+        }
+
+        .post-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Стили для превью постов (добавлено) */
+        .post-preview {
+            opacity: 1 !important; /* Важно: принудительно устанавливаем непрозрачность */
+            background-color: #F5F5F5;
+            
+            padding: 10px;
+            position: absolute;
+            z-index: 100;
+            max-width: 400px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        /* Цитаты */
+        .quote {
+            color: #789922;
+        }
+
+        /* Ответы */
+        .post-replies {
+            margin-top: 5px;
+            font-size: 0.85em;
+            color: gray;
+        }
+
+        /* "Ответить" — как обычная ссылка */
+        .reply-btn,
+        .reply-text {
+            background: none;
+            border: none;
+            color: #3f9a57; /* бордовый, как ссылки в светлой теме */
+            cursor: pointer;
+            font-size: 0.85em;
+            padding: 0;
+            margin: 0;
+            text-decoration: none;
+            font-family: inherit;
+        }
+
+        /* При наведении */
+        .reply-btn:hover,
+        .reply-text:hover {
+            color: #3f9a57;
+            text-decoration: underline;
+        }
+
+        .header-text.collapsed {
+            max-height: 200px;
+            overflow: hidden;
+            position: relative;
+            color:black;
+        }
+
+        .header-text.collapsed::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            color:black;
+        }
+
+        /* Сообщения об ошибках */
+        .timer-message {
+            color: #FF0000;
+            background-color: #F5F5F5;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #FF0000;
+            border-radius: 3px;
+        }
+        
+        /* Стили для спойлеров */
+        .spoiler.hidden {
+            background-color: grey; /* Цвет фона как у формы поста */
+            color: transparent; /* Текст полностью прозрачный */
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 2px;
+            padding: 0 2px;
+        }
+
+        .spoiler.hidden:hover {
+            background-color: #f0f0f0; /* Сохраняем исходный фон */
+            color: inherit; /* Текст становится полностью видимым */
+            text-shadow: none;
+        }
+
+        .spoiler.visible {
+            background-color: transparent;
+            color: inherit;
+            cursor: default;
+            padding: 0;
+        }
+        
+        /* Список выбранных файлов */
+        #file-list {
+            margin-top: 8px;
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 600px) {
+            body {
+                padding: 5px;
+            }
+
+            .post, .message-form {
+                padding: 10px;
+            }
+
+            .media-files img, .media-files video {
+                max-width: 150px;
+                max-height: 150px;
+            }
+
+            .post-header {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: center;
+                gap: 5px;
+                font-size: 0.8em;
+            }
+
+            /* Адаптивные стили для превью */
+            .post-preview {
+                max-width: 300px;
+            }
+            
+            /* Адаптивность для кнопок формы */
+            .form-buttons {
+                flex-direction: row;
+            }
+            
+            .file-input-container {
+                max-width: 65%;
+            }
+            
+            .custom-file-button {
+                padding: 8px 10px;
+                font-size: 0.8em;
+            }
+            
+            .form-buttons button[type="submit"] {
+                padding: 8px 12px;
+                font-size: 0.9em;
+            }
+        }
+
+
+/* Стили для формы перехода на страницу */
+    .page-jump {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: 15px;
+    }
+    
+    .page-input {
+        width: 60px;
+        padding: 6px 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        text-align: center;
+        font-size: 14px;
+    }
+    
+    .page-btn {
+        padding: 6px 12px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.2s;
+    }
+    
+    .page-btn:hover {
+        background-color: #e0e0e0;
+    }
+    
+ 
+    
+    /* Адаптивность для мобильных устройств */
+    @media (max-width: 768px) {
+        .page-jump {
+            margin-left: 0;
+            margin-top: 10px;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .page-input {
+            width: 50px;
+        }
+    }
+    
+    /* Дополнительные стили для пагинации */
+    .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin: 20px 0;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        border: 1px solid #eee;
+    }
+    
+   
+    
+    .pagination a {
+        padding: 8px 16px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        text-decoration: none;
+        color: #333;
+        transition: all 0.2s;
+    }
+    
+    .pagination a:hover {
+        background-color: #f0f0f0;
+        border-color: #ccc;
+    }
+        .my-link {
+    color: black;
+      background-color: #eeeeee; /* Цвет фона ссылки */
+      padding: 10px; /* Внутренний отступ */
+      border-radius: 5px; /* Скругление углов */
+      font-size: 1.5rem;
+  text-align: center;
+    }
+    
+    .my-link:visited {
+     color: black;
+}
+
+   .theme-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .theme-switcher:hover {
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+        
+        /* Темная тема для переключателя */
+        body.dark-theme .theme-switcher {
+            background: rgba(40, 40, 40, 0.9);
+            color: #fff;
+            border-color: #555;
+        }
+        
+        body.dark-theme .theme-switcher:hover {
+            background: rgba(50, 50, 50, 1);
+        }

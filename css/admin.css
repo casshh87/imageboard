@@ -1,0 +1,145 @@
+    /* Основные стили для формы */
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 70vh;
+        padding: 20px;
+    }
+    
+    .login-form {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        width: 100%;
+        max-width: 450px;
+        text-align: center;
+    }
+    
+    .login-form input[type="password"] {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 18px;
+        transition: border-color 0.3s;
+        box-sizing: border-box;
+    }
+    
+    .login-form input[type="password"]:focus {
+        border-color: #4a90e2;
+        outline: none;
+    }
+    
+    .login-form button {
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 18px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100%;
+    }
+    
+    .login-form button:hover {
+        background-color: #3a7bc8;
+    }
+    
+    /* Стили для админ-панели */
+    .admin-panel {
+        width: 100%;
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 0 15px;
+        box-sizing: border-box;
+    }
+    
+    .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    
+    .admin-table th, .admin-table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+    
+    .admin-table th {
+        background-color: #f2f2f2;
+    }
+    
+    .admin-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    
+    .admin-table tr:hover {
+        background-color: #f1f1f1;
+    }
+    
+    .action-links a {
+        color: #4a90e2;
+        text-decoration: none;
+        margin-right: 10px;
+    }
+    
+    .action-links a:hover {
+        text-decoration: underline;
+    }
+    
+    /* Адаптивность для мобильных устройств */
+    @media (max-width: 768px) {
+        .login-form {
+            padding: 30px 20px;
+        }
+        
+        .login-form input[type="password"],
+        .login-form button {
+            padding: 12px;
+            font-size: 16px;
+        }
+        
+        .admin-table {
+            display: block;
+            overflow-x: auto;
+        }
+        
+        .admin-table th, .admin-table td {
+            padding: 8px;
+            font-size: 14px;
+        }
+        
+        .message-cell {
+            max-width: 100px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .name-cell {
+            max-width: 80px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .message-cell {
+            max-width: 60px;
+        }
+        
+        .name-cell {
+            max-width: 60px;
+        }
+        
+        .admin-table th, .admin-table td {
+            padding: 6px;
+            font-size: 12px;
+        }
+    }
